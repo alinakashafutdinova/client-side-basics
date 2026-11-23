@@ -1,0 +1,15 @@
+{
+  "name": "client-side-basics",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Лабораторные работы по основам веб-разработки на клиенте",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "eslint": "^9.39.1",
+    "globals": "^16.5.0"
+  }
+}
