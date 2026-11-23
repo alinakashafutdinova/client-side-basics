@@ -6,7 +6,7 @@
 
 ## Как скачать работу
 
-Нужен Git. В Терминале на MacBook или в PowerShell на Windows:
+Для начала установите Git. Затем откройте Терминал на MacBook или PowerShell на Windows:
 
 ```bash
 git clone https://github.com/alinakashafutdinova/client-side-basics.git
@@ -14,6 +14,6 @@ cd client-side-basics
 git switch lab1
 ```
 
-В последней команде можно вместо `lab1` указать нужную ветку. Если проект уже скачан, достаточно выполнить `git fetch origin` и `git switch lab2` (или выбрать другую лабораторную).
+В последней команде укажите ветку нужной лабораторной вместо `lab1`. Если проект уже скачан, выполните `git fetch origin`, а затем перейдите в нужную ветку командой `git switch lab2` (для второй лабораторной).
 
 Инструкции по запуску и проверки находятся в README каждой ветки.
