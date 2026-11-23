@@ -1,0 +1,97 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: #302d35;
+  background: #faf8f9;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+}
+
+.page {
+  width: min(100% - 40px, 860px);
+  margin: 56px auto;
+}
+
+.header,
+.section {
+  background: #fff;
+  border: 1px solid #eee7eb;
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin-bottom: 20px;
+}
+
+.header {
+  border-top: 5px solid #ca5e89;
+}
+
+.course {
+  margin: 0 0 12px;
+  color: #a4426a;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+h1 {
+  margin: 0 0 12px;
+  font-size: clamp(24px, 4vw, 32px);
+  line-height: 1.25;
+}
+
+h2 {
+  margin: 0 0 18px;
+  font-size: 21px;
+}
+
+.subtitle,
+.group {
+  margin: 4px 0;
+  color: #6a6370;
+}
+
+.tasks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 28px;
+  padding-left: 24px;
+  margin: 0;
+}
+
+.tasks li {
+  padding-left: 4px;
+}
+
+.tasks li::marker {
+  color: #a4426a;
+  font-weight: bold;
+}
+
+.note {
+  background: #fff9fb;
+}
+
+.note p {
+  margin: 10px 0 0;
+}
+
+code {
+  color: #9d315d;
+}
+
+@media (max-width: 620px) {
+  .page {
+    margin: 20px auto;
+  }
+
+  .header,
+  .section {
+    padding: 22px;
+  }
+
+  .tasks {
+    grid-template-columns: 1fr;
+  }
+}
