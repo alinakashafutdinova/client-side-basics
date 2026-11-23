@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Лабораторная работа №2: работа с DOM и событиями JavaScript." />
+    <title>Лабораторная работа №2 — DOM и события</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <div class="header-brand" aria-label="Учебный проект по JavaScript">
+          <span class="brand-mark" aria-hidden="true">JS</span>
+          <span>Основы веб-разработки на клиенте</span>
+        </div>
+        <div class="cart-indicator" role="status" aria-label="Количество товаров в корзине">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h9.4a2 2 0 0 0 2-1.6L22 8H6" />
+            <circle cx="10" cy="20" r="1" /><circle cx="19" cy="20" r="1" />
+          </svg>
+          <span class="cart-count" id="cart-count" aria-live="polite" aria-atomic="true">0</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <div class="intro">
+        <p class="eyebrow">Лабораторная работа / 02</p>
+        <h1>Кашафутдинова Алина Тимуровна - Лабораторная работа №2</h1>
+        <p class="intro-subtitle">DOM и события. Группа 257-321</p>
+        <p class="intro-description">Пять небольших заданий для практики: обработчики событий, изменение состояния элементов, работа с массивами и создание интерфейса через JavaScript.</p>
+      </div>
+
+      <div class="small-tasks">
+        <section class="panel" aria-labelledby="like-heading">
+          <div class="panel-heading"><span class="task-number">01</span><h2 id="like-heading">Like</h2></div>
+          <p class="panel-description">Нажми на кнопку, чтобы поставить отметку. Повторное нажатие её отменит.</p>
+          <button class="reaction-button" id="like-button" type="button" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z" /></svg>
+            <span>Нравится</span>
+          </button>
+          <p class="feedback" id="like-status" aria-live="polite">Отметка не поставлена</p>
+        </section>
+
+        <section class="panel" aria-labelledby="voting-heading">
+          <div class="panel-heading"><span class="task-number">02</span><h2 id="voting-heading">Like / Dislike</h2></div>
+          <p class="panel-description">Можно выбрать только одну реакцию. Нажатие на выбранную реакцию снимает её.</p>
+          <div class="button-row">
+            <button class="reaction-button" id="vote-like" type="button" aria-pressed="false">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3ZM7 10l5-8a2 2 0 0 1 3 2v4h5a2 2 0 0 1 2 2l-1.4 9a2 2 0 0 1-2 2H7" /></svg>
+              <span>Нравится</span>
+            </button>
+            <button class="reaction-button dislike" id="vote-dislike" type="button" aria-pressed="false">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 14V3H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3ZM7 14l5 8a2 2 0 0 0 3-2v-4h5a2 2 0 0 0 2-2l-1.4-9a2 2 0 0 0-2-2H7" /></svg>
+              <span>Не нравится</span>
+            </button>
+          </div>
+          <p class="feedback" id="vote-status" aria-live="polite">Реакция не выбрана</p>
+        </section>
+      </div>
+
+      <section class="panel section-block" aria-labelledby="shop-heading">
+        <div class="panel-heading"><span class="task-number">03</span><h2 id="shop-heading">Корзина</h2></div>
+        <p class="panel-description">При каждом нажатии на «В корзину» счётчик в правом верхнем углу увеличивается.</p>
+        <div class="products" id="products">
+          <article class="product-card">
+            <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=600&h=450&fit=crop&q=78" alt="Нежные розовые цветы" width="600" height="450" loading="lazy" />
+            <div class="product-info"><h3>Цветочная открытка</h3><p>Небольшой подарок для хорошего настроения</p><div class="product-bottom"><span class="price">290 ₽</span><button class="primary-button add-to-cart" type="button" data-product="Цветочная открытка">В корзину <span aria-hidden="true">＋</span></button></div></div>
+          </article>
+          <article class="product-card">
+            <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=600&h=450&fit=crop&q=78" alt="Кофе в чашке на столе" width="600" height="450" loading="lazy" />
+            <div class="product-info"><h3>Кофейный набор</h3><p>Для уютных утренних перерывов</p><div class="product-bottom"><span class="price">590 ₽</span><button class="primary-button add-to-cart" type="button" data-product="Кофейный набор">В корзину <span aria-hidden="true">＋</span></button></div></div>
+          </article>
+          <article class="product-card">
+            <img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?w=600&h=450&fit=crop&q=78" alt="Книга и домашняя обстановка" width="600" height="450" loading="lazy" />
+            <div class="product-info"><h3>Блокнот для заметок</h3><p>Чтобы записывать идеи и планы</p><div class="product-bottom"><span class="price">390 ₽</span><button class="primary-button add-to-cart" type="button" data-product="Блокнот для заметок">В корзину <span aria-hidden="true">＋</span></button></div></div>
+          </article>
+        </div>
+        <p class="feedback" id="cart-status" aria-live="polite">В корзине пока нет товаров</p>
+      </section>
+
+      <section class="panel section-block" aria-labelledby="sorting-heading">
+        <div class="panel-heading"><span class="task-number">04</span><h2 id="sorting-heading">Сортировка</h2></div>
+        <p class="panel-description">Числа генерируются один раз при загрузке. Исходный порядок сохраняется, чтобы его можно было восстановить.</p>
+        <div class="button-row sort-buttons" role="group" aria-label="Способ сортировки">
+          <button type="button" class="secondary-button" id="sort-asc">По возрастанию ↑</button>
+          <button type="button" class="secondary-button" id="sort-desc">По убыванию ↓</button>
+          <button type="button" class="secondary-button" id="sort-reset">Исходный порядок ↺</button>
+        </div>
+        <ul class="numbers" id="number-list" aria-label="Список случайных чисел"></ul>
+        <p class="feedback" id="sort-status" aria-live="polite">Исходный порядок</p>
+      </section>
+
+      <section class="panel section-block" aria-labelledby="gallery-heading">
+        <div class="panel-heading"><span class="task-number">05</span><h2 id="gallery-heading">Галерея фотографий</h2></div>
+        <p class="panel-description">Удерживай фотографию <strong>1 секунду</strong>, чтобы начать выбор. Затем выбирай остальные обычным нажатием. Номер появится именно в месте нажатия.</p>
+        <p class="hint">Для выбора с клавиатуры: <kbd>Shift</kbd> + <kbd>Enter</kbd>, затем <kbd>Enter</kbd> для других фото.</p>
+        <div class="gallery-toolbar">
+          <span class="selection-counter" id="selection-count" aria-live="polite">Ничего не выбрано</span>
+          <div class="button-row">
+            <button type="button" class="primary-button" id="move-selected" disabled>Перенести</button>
+            <button type="button" class="danger-button" id="delete-selected" disabled>Удалить</button>
+          </div>
+        </div>
+        <div class="gallery-grid" id="photo-gallery" aria-label="Основная галерея">
+          <div class="photo-item"><button type="button" class="gallery-photo" data-photo-id="1" aria-label="Выбрать фото: Горы на закате" aria-pressed="false"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&h=450&fit=crop&q=78" alt="Горный пейзаж" width="600" height="450" draggable="false" loading="lazy" /></button></div>
+          <div class="photo-item"><button type="button" class="gallery-photo" data-photo-id="2" aria-label="Выбрать фото: Лес" aria-pressed="false"><img src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=600&h=450&fit=crop&q=78" alt="Зелёный лес" width="600" height="450" draggable="false" loading="lazy" /></button></div>
+          <div class="photo-item"><button type="button" class="gallery-photo" data-photo-id="3" aria-label="Выбрать фото: Озеро" aria-pressed="false"><img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=600&h=450&fit=crop&q=78" alt="Озеро среди гор" width="600" height="450" draggable="false" loading="lazy" /></button></div>
+          <div class="photo-item"><button type="button" class="gallery-photo" data-photo-id="4" aria-label="Выбрать фото: Побережье" aria-pressed="false"><img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=600&h=450&fit=crop&q=78" alt="Морские волны" width="600" height="450" draggable="false" loading="lazy" /></button></div>
+          <div class="photo-item"><button type="button" class="gallery-photo" data-photo-id="5" aria-label="Выбрать фото: Цветы" aria-pressed="false"><img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=600&h=450&fit=crop&q=78" alt="Цветущие розовые растения" width="600" height="450" draggable="false" loading="lazy" /></button></div>
+          <div class="photo-item"><button type="button" class="gallery-photo" data-photo-id="6" aria-label="Выбрать фото: Рассвет" aria-pressed="false"><img src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=600&h=450&fit=crop&q=78" alt="Солнце на горизонте" width="600" height="450" draggable="false" loading="lazy" /></button></div>
+          <div class="photo-item"><button type="button" class="gallery-photo" data-photo-id="7" aria-label="Выбрать фото: Поле" aria-pressed="false"><img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?w=600&h=450&fit=crop&q=78" alt="Зелёный пейзаж" width="600" height="450" draggable="false" loading="lazy" /></button></div>
+          <div class="photo-item"><button type="button" class="gallery-photo" data-photo-id="8" aria-label="Выбрать фото: Зимний лес" aria-pressed="false"><img src="https://images.unsplash.com/photo-1455156218388-5e61b526818b?w=600&h=450&fit=crop&q=78" alt="Заснеженные деревья" width="600" height="450" draggable="false" loading="lazy" /></button></div>
+          <div class="photo-item"><button type="button" class="gallery-photo" data-photo-id="9" aria-label="Выбрать фото: Природа" aria-pressed="false"><img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=600&h=450&fit=crop&q=78" alt="Лесной пейзаж" width="600" height="450" draggable="false" loading="lazy" /></button></div>
+          <div class="photo-item"><button type="button" class="gallery-photo" data-photo-id="10" aria-label="Выбрать фото: Осенний лес" aria-pressed="false"><img src="https://images.unsplash.com/photo-1472396961693-142e6e269027?w=600&h=450&fit=crop&q=78" alt="Деревья в солнечном свете" width="600" height="450" draggable="false" loading="lazy" /></button></div>
+        </div>
+        <div class="copied-section">
+          <h3>Скопированные <span class="copied-count" id="copied-count">0</span></h3>
+          <p class="copied-note">Сюда попадут перенесённые фотографии в порядке их выбора.</p>
+          <div class="gallery-grid copied-grid" id="copied-gallery" aria-label="Перенесённые фотографии"></div>
+          <p class="empty-gallery" id="empty-copied">Пока здесь нет фотографий</p>
+        </div>
+        <p class="visually-hidden" id="gallery-status" role="status" aria-live="polite"></p>
+      </section>
+    </main>
+    <footer class="page-footer"><div class="wrap">Лабораторная работа №2 · DOM и события · 2026</div></footer>
+  </body>
+</html>
