@@ -2,7 +2,7 @@
   "name": "client-side-basics",
   "version": "1.0.0",
   "private": true,
-  "description": "Лабораторные работы по основам веб-разработки на клиенте",
+  "description": "Лабораторные работы по основам веб-разработки на стороне клиента",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
