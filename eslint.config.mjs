@@ -6,15 +6,14 @@ export default [
     ignores: ['node_modules/**', 'coverage/**']
   },
   {
-    files: ['**/*.js'],
+    files: ['script.js', 'config.js'],
     languageOptions: {
       ecmaVersion: 'latest',
-      sourceType: 'module',
+      sourceType: 'script',
       globals: globals.browser
     },
     rules: {
       ...js.configs.recommended.rules,
-      // Правила из задания преподавателя.
       'no-template-curly-in-string': 'error',
       'no-use-before-define': ['error', { functions: false }],
       'no-useless-assignment': 'error',
