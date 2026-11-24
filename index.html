@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Лабораторная работа №8 — исследование утечек памяти в браузере">
+  <title>Лабораторная №8 — Потребление памяти веб-приложением</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="src/app.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-content">
+      <a class="brand" href="#top" aria-label="На начало страницы"><span class="brand-mark">JS</span><span>Практика JavaScript</span></a>
+      <span class="header-tag">Лабораторная работа / 08</span>
+    </div>
+  </header>
+  <main class="container" id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Основы веб-разработки на стороне клиента</p>
+        <h1>Кашафутдинова Алина Тимуровна - Лабораторная работа №8</h1>
+        <p class="subtitle">Потребление памяти веб-приложением</p>
+        <p class="intro">На этой странице я смоделировала три ситуации, когда элементы уже удалены с экрана, но память браузера всё ещё занята. Для каждого случая можно воспроизвести проблему и затем исправить её.</p>
+        <div class="hero-meta"><span>Группа 257-321</span><span>3 эксперимента</span><span>Memory / Heap Snapshot</span></div>
+      </div>
+      <aside class="hero-aside" aria-label="Подсказка">
+        <span class="aside-number">01 / 02 / 03</span>
+        <div class="orbit" aria-hidden="true"><span class="orbit-center">DOM</span><i></i><i></i><i></i></div>
+        <p>Удаление элемента из DOM ещё не означает освобождение памяти.</p>
+      </aside>
+    </section>
+
+    <section class="instructions" aria-labelledby="guide-title">
+      <div class="section-top"><span class="step-label">Перед началом</span><h2 id="guide-title">Как провести эксперимент</h2></div>
+      <ol>
+        <li>Откройте страницу в режиме инкогнито и перейдите в <strong>DevTools → Memory</strong>.</li>
+        <li>Выберите <strong>Heap snapshot</strong>, вызовите сборку мусора и сделайте первый снимок.</li>
+        <li>В нужном эксперименте нажмите <strong>«Создать элементы»</strong>, затем <strong>«Удалить из DOM»</strong>. После сборки мусора сделайте второй снимок.</li>
+        <li>Повторите создание и удаление, сделайте третий снимок. Найдите <strong>Detached</strong>-элементы и проверьте вкладку <strong>Retainers</strong>.</li>
+        <li>Нажмите <strong>«Устранить утечку»</strong> и сделайте ещё один снимок для сравнения.</li>
+      </ol>
+      <p class="small-note">Числа в счётчиках ниже — количество объектов, а не размер памяти в мегабайтах. Точные значения памяти смотрите во вкладке Memory браузера.</p>
+    </section>
+
+    <section class="experiment" id="events" data-scenario="events" aria-labelledby="events-title">
+      <div class="experiment-head"><div><span class="step-label">Эксперимент 01</span><h2 id="events-title">Забытые обработчики событий</h2></div><span class="scenario-chip">window.addEventListener</span></div>
+      <p class="experiment-description">Для каждой карточки добавляется обработчик события <code>resize</code> на <code>window</code>. После удаления карточек обработчики продолжают хранить ссылки на них.</p>
+      <div class="counters" aria-live="polite"><div><span>Карточек в DOM</span><strong data-counter="dom">0</strong></div><div><span>Осталось ссылок</span><strong data-counter="retained">0</strong></div><div><span>Циклов создания</span><strong data-counter="cycles">0</strong></div></div>
+      <div class="actions"><button type="button" data-action="create" class="button primary">Создать элементы</button><button type="button" data-action="remove" class="button secondary" disabled>Удалить из DOM</button><button type="button" data-action="repair" class="button outline">Устранить утечку</button></div>
+      <div class="stage-wrap"><div class="stage-caption"><span>Область элементов</span><span>80 карточек за цикл</span></div><div class="stage" data-stage="events" aria-label="Карточки первого эксперимента"><p class="empty-state">Нажмите «Создать элементы»</p></div></div>
+      <p class="scenario-message" data-message="events" role="status">Создайте и удалите карточки, чтобы увидеть, почему слушатели событий мешают очистке памяти.</p>
+      <details class="explain"><summary>Почему возникает утечка и как её исправить?</summary><p><code>window</code> хранит обработчик, а функция-обработчик ссылается на карточку. Даже если карточка удалена из DOM, сборщик мусора не может удалить её, пока обработчик зарегистрирован. Исправление — вызвать <code>removeEventListener</code> с той же функцией.</p></details>
+    </section>
+
+    <section class="experiment" id="cache" data-scenario="cache" aria-labelledby="cache-title">
+      <div class="experiment-head"><div><span class="step-label">Эксперимент 02</span><h2 id="cache-title">DOM-узлы в глобальном Map</h2></div><span class="scenario-chip">Map.set / Map.clear</span></div>
+      <p class="experiment-description">При создании каждая карточка попадает в глобальный <code>Map</code> для «быстрого доступа». После удаления карточек записи остаются в коллекции.</p>
+      <div class="counters" aria-live="polite"><div><span>Карточек в DOM</span><strong data-counter="dom">0</strong></div><div><span>Осталось ссылок</span><strong data-counter="retained">0</strong></div><div><span>Циклов создания</span><strong data-counter="cycles">0</strong></div></div>
+      <div class="actions"><button type="button" data-action="create" class="button primary">Создать элементы</button><button type="button" data-action="remove" class="button secondary" disabled>Удалить из DOM</button><button type="button" data-action="repair" class="button outline">Устранить утечку</button></div>
+      <div class="stage-wrap"><div class="stage-caption"><span>Область элементов</span><span>80 карточек за цикл</span></div><div class="stage" data-stage="cache" aria-label="Карточки второго эксперимента"><p class="empty-state">Нажмите «Создать элементы»</p></div></div>
+      <p class="scenario-message" data-message="cache" role="status">После удаления карточки останутся в памяти, поскольку глобальный Map хранит ссылки на них.</p>
+      <details class="explain"><summary>Почему возникает утечка и как её исправить?</summary><p>Глобальная коллекция <code>window.memoryLabCache</code> держит прямые ссылки на DOM-узлы. Пока записи остаются в <code>Map</code>, узлы не могут быть собраны. Исправление — удалить ненужные записи через <code>delete</code> или очистить коллекцию через <code>clear</code>.</p></details>
+    </section>
+
+    <section class="experiment" id="timers" data-scenario="timers" aria-labelledby="timers-title">
+      <div class="experiment-head"><div><span class="step-label">Эксперимент 03</span><h2 id="timers-title">Замыкания и работающие таймеры</h2></div><span class="scenario-chip">setInterval / clearInterval</span></div>
+      <p class="experiment-description">Каждая карточка создаёт <code>setInterval</code>. Функция таймера использует ссылку на карточку из внешней функции. После удаления карточки таймер продолжает работать.</p>
+      <div class="counters" aria-live="polite"><div><span>Карточек в DOM</span><strong data-counter="dom">0</strong></div><div><span>Осталось ссылок</span><strong data-counter="retained">0</strong></div><div><span>Циклов создания</span><strong data-counter="cycles">0</strong></div></div>
+      <div class="actions"><button type="button" data-action="create" class="button primary">Создать элементы</button><button type="button" data-action="remove" class="button secondary" disabled>Удалить из DOM</button><button type="button" data-action="repair" class="button outline">Устранить утечку</button></div>
+      <div class="stage-wrap"><div class="stage-caption"><span>Область элементов</span><span>80 карточек за цикл</span></div><div class="stage" data-stage="timers" aria-label="Карточки третьего эксперимента"><p class="empty-state">Нажмите «Создать элементы»</p></div></div>
+      <p class="scenario-message" data-message="timers" role="status">Таймер продолжает обращаться к удалённому элементу, пока его не остановить.</p>
+      <details class="explain"><summary>Почему возникает утечка и как её исправить?</summary><p>Браузер держит активный таймер, таймер — функцию обратного вызова, а её замыкание — ссылку на карточку. Исправление — сохранять идентификаторы таймеров и вызывать <code>clearInterval</code>, когда элемент больше не нужен.</p></details>
+    </section>
+
+    <section class="finish" aria-labelledby="finish-title"><div><span class="step-label">После экспериментов</span><h2 id="finish-title">Проверьте снимки памяти</h2><p>Для каждого из трёх примеров сравните снимки №1, №2 и №3, найдите <code>Detached</code>-узлы и проследите путь удержания через <code>Retainers</code>. Скриншоты и выводы добавьте в <code>REPORT.md</code>.</p></div><a class="button primary" href="https://developer.chrome.com/docs/devtools/memory-problems/heap-snapshots" target="_blank" rel="noopener noreferrer">Справка DevTools <span aria-hidden="true">↗</span></a></section>
+  </main>
+  <footer class="footer"><div class="container"><span>Кашафутдинова Алина Тимуровна · 257-321</span><span>Основы веб-разработки на стороне клиента · 2026</span></div></footer>
+</body>
+</html>
