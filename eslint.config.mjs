@@ -3,10 +3,7 @@ import globals from 'globals';
 
 export default [
   {
-    ignores: ['node_modules/**', 'coverage/**']
-  },
-  {
-    files: ['**/*.js'],
+    files: ['src/**/*.js'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
@@ -14,7 +11,6 @@ export default [
     },
     rules: {
       ...js.configs.recommended.rules,
-      // Правила из задания преподавателя.
       'no-template-curly-in-string': 'error',
       'no-use-before-define': ['error', { functions: false }],
       'no-useless-assignment': 'error',
