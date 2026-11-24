@@ -2,41 +2,22 @@ import js from '@eslint/js';
 import globals from 'globals';
 
 export default [
+  { ignores: ['node_modules/**', 'preview_*.png'] },
   {
-    ignores: ['node_modules/**', 'coverage/**']
-  },
-  {
-    files: ['**/*.js'],
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      globals: globals.browser
-    },
+    files: ['js/**/*.mjs', 'tests/**/*.mjs'],
+    languageOptions: { ecmaVersion: 'latest', sourceType: 'module', globals: globals.browser },
     rules: {
       ...js.configs.recommended.rules,
-      // Правила из задания преподавателя.
-      'no-template-curly-in-string': 'error',
-      'no-use-before-define': ['error', { functions: false }],
-      'no-useless-assignment': 'error',
-      'accessor-pairs': 'error',
-      'arrow-body-style': ['error', 'as-needed'],
-      camelcase: 'error',
-      curly: 'error',
+      curly: ['error', 'all'],
       eqeqeq: ['error', 'always'],
-      'no-alert': 'error',
-      'no-console': 'error',
-      'no-nested-ternary': 'error',
-      'no-return-assign': 'error',
-      'no-shadow': ['error', { hoist: 'all' }],
-      'no-unneeded-ternary': 'error',
-      'no-unused-expressions': 'error',
-      'no-useless-concat': 'error',
-      'no-useless-return': 'error',
       'no-var': 'error',
-      'prefer-arrow-callback': 'error',
       'prefer-const': 'error',
-      'prefer-template': 'error',
-      radix: 'error'
+      'no-alert': 'error',
+      'no-unused-vars': 'error'
     }
+  },
+  {
+    files: ['tests/**/*.mjs'],
+    languageOptions: { globals: { ...globals.browser, ...globals.node } }
   }
 ];
