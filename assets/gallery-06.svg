@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 520" width="840" height="520" role="img">
+<defs><linearGradient id="sky" x1="0" x2="0.8" y1="0" y2="1"><stop stop-color="#ffe5bd"/><stop offset="1" stop-color="#e0aeae"/></linearGradient>
+<linearGradient id="glow" x1="0" x2="1"><stop stop-color="#db9c84" stop-opacity=".4"/><stop offset="1" stop-color="#ffe5bd" stop-opacity="0"/></linearGradient></defs>
+<rect width="840" height="520" fill="url(#sky)"/>
+<circle cx="195" cy="125" r="69" fill="#fff0d9" opacity=".6"/>
+<circle cx="195" cy="125" r="125" fill="url(#glow)"/>
+<path d="M0 325 135 165 260 311 402 120 572 306 704 175 840 316 840 520 0 520Z" fill="#7e97ad" opacity=".8"/><path d="M0 385 140 270 280 365 462 225 620 367 742 266 840 326 840 520 0 520Z" fill="#68818e"/><rect x="354" y="296" width="110" height="78" fill="#e7d4c7"/><path d="M334 299 409 245 483 299Z" fill="#915b67"/><rect x="404" y="328" width="24" height="46" fill="#9a6b68"/><rect x="370" y="315" width="23" height="23" fill="#f4dba1"/>
+<rect x="0" y="0" width="840" height="520" fill="url(#glow)" opacity=".3"/>
+</svg>
