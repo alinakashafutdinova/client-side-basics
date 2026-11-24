@@ -250,7 +250,7 @@ function handleThemeToggle() {
   document.documentElement.dataset.theme = nextTheme;
   try {
     localStorage.setItem('lab5-theme', nextTheme);
-  } catch (error) {
+  } catch {
     // Если хранилище недоступно, тема всё равно переключается до обновления.
   }
   updateThemeButton();
