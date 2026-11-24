@@ -2,9 +2,7 @@ import js from '@eslint/js';
 import globals from 'globals';
 
 export default [
-  {
-    ignores: ['node_modules/**', 'coverage/**']
-  },
+  { ignores: ['node_modules/**', 'coverage/**'] },
   {
     files: ['**/*.js'],
     languageOptions: {
@@ -14,7 +12,7 @@ export default [
     },
     rules: {
       ...js.configs.recommended.rules,
-      // Правила из задания преподавателя.
+      // Правила проверки из задания преподавателя.
       'no-template-curly-in-string': 'error',
       'no-use-before-define': ['error', { functions: false }],
       'no-useless-assignment': 'error',
