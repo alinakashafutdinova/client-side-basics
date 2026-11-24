@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Лабораторная работа №5: Fetch API, галерея, отправка температуры и переключение темы.">
+  <title>Лабораторная работа №5 — Fetch API</title>
+  <!-- Применяю сохранённую тему до загрузки CSS, чтобы не было мерцания. -->
+  <script>
+    try {
+      document.documentElement.dataset.theme = localStorage.getItem('lab5-theme') === 'dark' ? 'dark' : 'light';
+    } catch (error) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  </script>
+  <link rel="stylesheet" href="style.css">
+  <script src="config.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top" class="brand" aria-label="Лабораторная №5, вернуться наверх">
+        <span class="brand-mark" aria-hidden="true">{ }</span>
+        <span>веб-практика <small>лабораторная №5</small></span>
+      </a>
+      <div class="header-actions">
+        <span class="header-course">Основы веб-разработки на стороне клиента</span>
+        <button id="theme-toggle" type="button" class="theme-toggle" aria-label="Включить тёмную тему" aria-pressed="false">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.3A8.7 8.7 0 0 1 9.7 3.5 9 9 0 1 0 20.5 14.3Z"></path></svg>
+          <span id="theme-text">Тёмная тема</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top" class="container">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <span class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span> Знакомство с Fetch API</span>
+        <h1 id="page-title">Кашафутдинова Алина Тимуровна —<br>Лабораторная работа №5</h1>
+        <p class="hero-text">На этой странице можно загрузить изображения с сервера и отправить температуру в аудитории. Для запросов используется JavaScript и Fetch API.</p>
+        <div class="hero-details">
+          <span class="detail-chip"><span class="chip-circle" aria-hidden="true"></span> Группа 257-321</span>
+          <span class="detail-chip">GET / POST / JSON</span>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hero-window">
+          <div class="window-top"><span></span><span></span><span></span></div>
+          <div class="code-line long"></div><div class="code-line middle"></div>
+          <div class="hero-bars"><i></i><i></i><i></i></div>
+          <div class="code-line short"></div>
+          <div class="floating-code">200 OK <span>✓</span></div>
+        </div>
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+      </div>
+    </section>
+
+    <section class="panel gallery-panel" aria-labelledby="gallery-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Задание 01 · GET-запрос</p>
+          <h2 id="gallery-title">Галерея изображений</h2>
+          <p class="section-description">Фотографии загружаются с сервера после открытия страницы. Вы можете обновить галерею вручную.</p>
+        </div>
+        <button class="button button-outline" type="button" id="refresh-gallery" aria-controls="gallery-content">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"></path><path d="M20 4v7h-7"></path></svg>
+          <span>Обновить галерею</span>
+        </button>
+      </div>
+      <div id="gallery-content" class="gallery-content" aria-live="polite" aria-busy="true">
+        <div class="loading-block" id="gallery-loading" role="status">
+          <span class="spinner" aria-hidden="true"></span>
+          <p>Загружаем изображения…</p>
+        </div>
+        <div id="gallery-grid" class="gallery-grid" hidden></div>
+        <p class="empty-state" id="gallery-empty" hidden>Изображения не найдены</p>
+        <div class="empty-state empty-error" id="gallery-error" hidden>
+          <span aria-hidden="true">☁</span>
+          <p>Не удалось загрузить изображения. Попробуйте обновить галерею.</p>
+        </div>
+      </div>
+      <p class="section-footnote">Если сервер временно недоступен, приложение попробует повторить запрос ещё три раза.</p>
+    </section>
+
+    <section class="panel temperature-panel" aria-labelledby="temperature-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Задание 02 · POST-запрос</p>
+          <h2 id="temperature-title">Температура в аудитории</h2>
+          <p class="section-description">Укажите аудиторию и температуру. После отправки данные будут переданы на сервер в формате JSON.</p>
+        </div>
+        <div class="temperature-illustration" aria-hidden="true">
+          <svg viewBox="0 0 88 88" fill="none"><circle cx="44" cy="44" r="41" fill="currentColor" opacity=".09"/><rect x="38" y="17" width="12" height="45" rx="6" stroke="currentColor" stroke-width="3"/><circle cx="44" cy="64" r="11" fill="currentColor"/><path d="M44 35v27" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><path d="M55 27h7m-7 10h7m-7 10h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+      <form id="temperature-form" class="temperature-form">
+        <div class="field">
+          <label for="room">Номер аудитории <span class="required">*</span></label>
+          <input id="room" name="room" type="text" required maxlength="20" autocomplete="off" placeholder="Например, 310" aria-describedby="room-hint">
+          <small id="room-hint">Укажите номер или название аудитории.</small>
+        </div>
+        <div class="field">
+          <label for="temperature">Температура, °C <span class="required">*</span></label>
+          <input id="temperature" name="temperature" type="number" required step="any" min="-100" max="100" inputmode="decimal" placeholder="Например, 22.5" aria-describedby="temperature-hint">
+          <small id="temperature-hint">Можно указать дробное число.</small>
+        </div>
+        <div class="form-actions">
+          <button type="submit" id="send-temperature" class="button button-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="m21 3-7 18-4-7-7-4 18-7Z"></path><path d="M21 3 10 14"></path></svg>
+            <span id="send-button-text">Отправить данные</span>
+          </button>
+          <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+      <p class="section-footnote">Пока сервер обрабатывает запрос, повторная отправка будет недоступна.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>Кашафутдинова Алина Тимуровна · группа 257-321</span>
+      <span>Основы веб-разработки на стороне клиента · 2026</span>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true" aria-hidden="true" inert>
+    <span id="toast-icon" class="toast-symbol" aria-hidden="true">✓</span>
+    <p id="toast-message" class="toast-message"></p>
+    <button id="toast-close" type="button" class="toast-close" aria-label="Закрыть уведомление" title="Закрыть уведомление">×</button>
+  </div>
+</body>
+</html>
