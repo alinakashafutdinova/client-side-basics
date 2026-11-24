@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
@@ -66,7 +67,15 @@ def main():
     js=(ROOT/'src/scenarios.js').read_text(encoding='utf-8').replace('export { ELEMENTS_PER_CYCLE, MemoryExperiments, TYPES };','')
     js+='\n'+(ROOT/'src/app.js').read_text(encoding='utf-8').replace("import { MemoryExperiments, TYPES } from './scenarios.js';",'')
     with sync_playwright() as pw:
-            browser=pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--disable-extensions'])
+            # На MacBook и Windows можно использовать Chromium, установленный через Playwright.
+            # В тестовой среде Linux подходит и системный Chromium.
+            custom_chrome = os.environ.get('CHROMIUM_PATH')
+            if custom_chrome is None and Path('/usr/bin/chromium').exists():
+                custom_chrome = '/usr/bin/chromium'
+            launch_options = {'headless': True, 'args': ['--disable-extensions']}
+            if custom_chrome:
+                launch_options['executable_path'] = custom_chrome
+            browser=pw.chromium.launch(**launch_options)
             context=browser.new_context(viewport={'width':1440,'height':900}, device_scale_factor=1)
             page=context.new_page()
             errors=[]
