@@ -1,0 +1,213 @@
+{
+  "browser": "Chromium (в автоматическом тесте)",
+  "method": "CDP HeapProfiler.takeHeapSnapshot + HeapProfiler.collectGarbage",
+  "count_per_cycle": 80,
+  "mobile_horizontal_overflow_px": 0,
+  "console_page_errors": [],
+  "results": {
+    "events": [
+      {
+        "stage": "Снимок 1: исходное состояние",
+        "heap_file_bytes": 2828653,
+        "heap_nodes": 33893,
+        "detached_nodes": 0,
+        "detached_self_bytes": 0,
+        "detached_examples": [],
+        "dom_nodes_named": 382,
+        "used_heap_bytes": 1286952,
+        "total_heap_bytes": 2138112
+      },
+      {
+        "stage": "Снимок 2: после 1 цикла(ов)",
+        "heap_file_bytes": 3488899,
+        "heap_nodes": 42547,
+        "detached_nodes": 1520,
+        "detached_self_bytes": 194560,
+        "detached_examples": [
+          "<article class=\"demo-card\" data-memory-scenario=\"events\" data-memory-cycle=\"1\" data-memory-item=\"0\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"events\" data-memory-cycle=\"1\" data-memory-item=\"1\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"events\" data-memory-cycle=\"1\" data-memory-item=\"10\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"events\" data-memory-cycle=\"1\" data-memory-item=\"11\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"events\" data-memory-cycle=\"1\" data-memory-item=\"12\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"events\" data-memory-cycle=\"1\" data-memory-item=\"13\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"events\" data-memory-cycle=\"1\" data-memory-item=\"14\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"events\" data-memory-cycle=\"1\" data-memory-item=\"15\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"events\" data-memory-cycle=\"1\" data-memory-item=\"16\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"events\" data-memory-cycle=\"1\" data-memory-item=\"17\">"
+        ],
+        "dom_nodes_named": 1908,
+        "used_heap_bytes": 1475924,
+        "total_heap_bytes": 2138112
+      },
+      {
+        "stage": "Снимок 3: после 2 цикла(ов)",
+        "heap_file_bytes": 4005650,
+        "heap_nodes": 49227,
+        "detached_nodes": 3040,
+        "detached_self_bytes": 389120,
+        "detached_examples": [
+          "<article class=\"demo-card\" data-memory-scenario=\"events\" data-memory-cycle=\"1\" data-memory-item=\"0\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"events\" data-memory-cycle=\"1\" data-memory-item=\"1\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"events\" data-memory-cycle=\"1\" data-memory-item=\"10\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"events\" data-memory-cycle=\"1\" data-memory-item=\"11\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"events\" data-memory-cycle=\"1\" data-memory-item=\"12\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"events\" data-memory-cycle=\"1\" data-memory-item=\"13\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"events\" data-memory-cycle=\"1\" data-memory-item=\"14\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"events\" data-memory-cycle=\"1\" data-memory-item=\"15\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"events\" data-memory-cycle=\"1\" data-memory-item=\"16\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"events\" data-memory-cycle=\"1\" data-memory-item=\"17\">"
+        ],
+        "dom_nodes_named": 3428,
+        "used_heap_bytes": 1548904,
+        "total_heap_bytes": 2138112
+      },
+      {
+        "stage": "После исправления",
+        "heap_file_bytes": 3015747,
+        "heap_nodes": 36371,
+        "detached_nodes": 0,
+        "detached_self_bytes": 0,
+        "detached_examples": [],
+        "dom_nodes_named": 388,
+        "used_heap_bytes": 1452896,
+        "total_heap_bytes": 2138112
+      }
+    ],
+    "cache": [
+      {
+        "stage": "Снимок 1: исходное состояние",
+        "heap_file_bytes": 3012859,
+        "heap_nodes": 36313,
+        "detached_nodes": 0,
+        "detached_self_bytes": 0,
+        "detached_examples": [],
+        "dom_nodes_named": 388,
+        "used_heap_bytes": 1452896,
+        "total_heap_bytes": 2138112
+      },
+      {
+        "stage": "Снимок 2: после 1 цикла(ов)",
+        "heap_file_bytes": 3504061,
+        "heap_nodes": 42662,
+        "detached_nodes": 1520,
+        "detached_self_bytes": 194560,
+        "detached_examples": [
+          "<article class=\"demo-card\" data-memory-scenario=\"cache\" data-memory-cycle=\"1\" data-memory-item=\"0\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"cache\" data-memory-cycle=\"1\" data-memory-item=\"1\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"cache\" data-memory-cycle=\"1\" data-memory-item=\"10\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"cache\" data-memory-cycle=\"1\" data-memory-item=\"11\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"cache\" data-memory-cycle=\"1\" data-memory-item=\"12\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"cache\" data-memory-cycle=\"1\" data-memory-item=\"13\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"cache\" data-memory-cycle=\"1\" data-memory-item=\"14\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"cache\" data-memory-cycle=\"1\" data-memory-item=\"15\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"cache\" data-memory-cycle=\"1\" data-memory-item=\"16\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"cache\" data-memory-cycle=\"1\" data-memory-item=\"17\">"
+        ],
+        "dom_nodes_named": 1908,
+        "used_heap_bytes": 1508328,
+        "total_heap_bytes": 2138112
+      },
+      {
+        "stage": "Снимок 3: после 2 цикла(ов)",
+        "heap_file_bytes": 3993794,
+        "heap_nodes": 48967,
+        "detached_nodes": 3040,
+        "detached_self_bytes": 389120,
+        "detached_examples": [
+          "<article class=\"demo-card\" data-memory-scenario=\"cache\" data-memory-cycle=\"1\" data-memory-item=\"0\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"cache\" data-memory-cycle=\"1\" data-memory-item=\"1\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"cache\" data-memory-cycle=\"1\" data-memory-item=\"10\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"cache\" data-memory-cycle=\"1\" data-memory-item=\"11\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"cache\" data-memory-cycle=\"1\" data-memory-item=\"12\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"cache\" data-memory-cycle=\"1\" data-memory-item=\"13\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"cache\" data-memory-cycle=\"1\" data-memory-item=\"14\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"cache\" data-memory-cycle=\"1\" data-memory-item=\"15\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"cache\" data-memory-cycle=\"1\" data-memory-item=\"16\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"cache\" data-memory-cycle=\"1\" data-memory-item=\"17\">"
+        ],
+        "dom_nodes_named": 3428,
+        "used_heap_bytes": 1583176,
+        "total_heap_bytes": 2138112
+      },
+      {
+        "stage": "После исправления",
+        "heap_file_bytes": 3045282,
+        "heap_nodes": 36707,
+        "detached_nodes": 0,
+        "detached_self_bytes": 0,
+        "detached_examples": [],
+        "dom_nodes_named": 388,
+        "used_heap_bytes": 1475652,
+        "total_heap_bytes": 2138112
+      }
+    ],
+    "timers": [
+      {
+        "stage": "Снимок 1: исходное состояние",
+        "heap_file_bytes": 3042204,
+        "heap_nodes": 36646,
+        "detached_nodes": 0,
+        "detached_self_bytes": 0,
+        "detached_examples": [],
+        "dom_nodes_named": 388,
+        "used_heap_bytes": 1475652,
+        "total_heap_bytes": 2138112
+      },
+      {
+        "stage": "Снимок 2: после 1 цикла(ов)",
+        "heap_file_bytes": 3555825,
+        "heap_nodes": 43319,
+        "detached_nodes": 1520,
+        "detached_self_bytes": 194560,
+        "detached_examples": [
+          "<article class=\"demo-card\" data-memory-scenario=\"timers\" data-memory-cycle=\"1\" data-memory-item=\"0\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"timers\" data-memory-cycle=\"1\" data-memory-item=\"1\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"timers\" data-memory-cycle=\"1\" data-memory-item=\"10\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"timers\" data-memory-cycle=\"1\" data-memory-item=\"11\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"timers\" data-memory-cycle=\"1\" data-memory-item=\"12\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"timers\" data-memory-cycle=\"1\" data-memory-item=\"13\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"timers\" data-memory-cycle=\"1\" data-memory-item=\"14\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"timers\" data-memory-cycle=\"1\" data-memory-item=\"15\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"timers\" data-memory-cycle=\"1\" data-memory-item=\"16\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"timers\" data-memory-cycle=\"1\" data-memory-item=\"17\">"
+        ],
+        "dom_nodes_named": 1908,
+        "used_heap_bytes": 1531304,
+        "total_heap_bytes": 2138112
+      },
+      {
+        "stage": "Снимок 3: после 2 цикла(ов)",
+        "heap_file_bytes": 4058358,
+        "heap_nodes": 49745,
+        "detached_nodes": 3040,
+        "detached_self_bytes": 389120,
+        "detached_examples": [
+          "<article class=\"demo-card\" data-memory-scenario=\"timers\" data-memory-cycle=\"1\" data-memory-item=\"0\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"timers\" data-memory-cycle=\"1\" data-memory-item=\"1\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"timers\" data-memory-cycle=\"1\" data-memory-item=\"10\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"timers\" data-memory-cycle=\"1\" data-memory-item=\"11\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"timers\" data-memory-cycle=\"1\" data-memory-item=\"12\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"timers\" data-memory-cycle=\"1\" data-memory-item=\"13\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"timers\" data-memory-cycle=\"1\" data-memory-item=\"14\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"timers\" data-memory-cycle=\"1\" data-memory-item=\"15\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"timers\" data-memory-cycle=\"1\" data-memory-item=\"16\">",
+          "<article class=\"demo-card\" data-memory-scenario=\"timers\" data-memory-cycle=\"1\" data-memory-item=\"17\">"
+        ],
+        "dom_nodes_named": 3428,
+        "used_heap_bytes": 1579840,
+        "total_heap_bytes": 2138112
+      },
+      {
+        "stage": "После исправления",
+        "heap_file_bytes": 3040337,
+        "heap_nodes": 36637,
+        "detached_nodes": 0,
+        "detached_self_bytes": 0,
+        "detached_examples": [],
+        "dom_nodes_named": 388,
+        "used_heap_bytes": 1471032,
+        "total_heap_bytes": 2138112
+      }
+    ]
+  }
+}
