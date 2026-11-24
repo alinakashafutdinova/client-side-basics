@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Лабораторная работа №4: игра «Тамагочи» на JavaScript и Promise.">
+  <title>Лабораторная №4 — Тамагочи</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-content">
+      <a href="#main" class="brand" aria-label="Перейти к игре"><span class="brand-star" aria-hidden="true">✳</span> моя лабораторная <span class="brand-muted">/ 04</span></a>
+      <span class="subject">Основы веб-разработки на стороне клиента</span>
+    </div>
+  </header>
+
+  <main class="container" id="main">
+    <section class="intro" aria-labelledby="page-title">
+      <div><p class="eyebrow">Лабораторная работа №4 · Promise</p>
+      <h1 id="page-title">Кашафутдинова Алина Тимуровна — Тамагочи</h1>
+      <p class="intro-caption">Группа 257-321 · Позаботьтесь о питомце: вовремя кормите, играйте и давайте ему отдыхать.</p></div>
+      <span class="intro-icon" aria-hidden="true">♡</span>
+    </section>
+
+    <div class="game-grid">
+      <section class="panel pet-panel" aria-labelledby="pet-title">
+        <div class="panel-top"><div><p class="section-label">Ваш питомец</p><h2 id="pet-title">Персик <span class="tiny-heart" aria-hidden="true">♥</span></h2></div>
+        <span class="status-pill" id="pet-state" aria-live="polite">Чувствует себя хорошо</span></div>
+        <div class="pet-stage" id="pet-stage">
+          <div class="sky-decoration sky-one" aria-hidden="true">✦</div>
+          <div class="sky-decoration sky-two" aria-hidden="true">✳</div>
+          <div class="speech-bubble" id="pet-speech" aria-live="polite">Рад вас видеть!</div>
+          <div class="pet-illustration" id="pet-illustration" role="img" aria-label="Нарисованный кот Персик">
+            <svg class="cat-svg" viewBox="0 0 320 288" aria-hidden="true" focusable="false">
+              <ellipse class="cat-shadow" cx="158" cy="261" rx="95" ry="13"/>
+              <path class="cat-tail" d="M217 215 C282 221 292 169 267 157 C248 146 242 170 257 174"/>
+              <path class="cat-body" d="M103 181 Q87 260 156 258 Q224 258 211 182 Z"/>
+              <path class="cat-belly" d="M135 211 Q157 202 180 212 Q194 251 158 250 Q123 251 135 211"/>
+              <path class="cat-head" d="M95 111 L93 37 Q93 23 106 36 L144 65 Q160 59 177 65 L213 36 Q229 23 226 44 L224 115 Q241 156 222 187 Q198 216 159 215 Q120 216 95 186 Q76 157 95 111Z"/>
+              <path class="cat-inner-ear" d="M106 81 L106 51 L134 75Z M214 82 L214 51 L185 75Z"/>
+              <ellipse class="cat-blush" cx="113" cy="158" rx="20" ry="12"/>
+              <ellipse class="cat-blush" cx="204" cy="158" rx="20" ry="12"/>
+              <g class="cat-eyes"><path d="M127 138 Q136 128 144 138 M177 138 Q186 128 195 138"/></g>
+              <path class="cat-nose" d="M154 149 Q160 155 166 149 Z"/>
+              <path class="cat-smile" d="M160 155 L160 161 Q151 170 145 162 M160 161 Q169 170 175 162"/>
+              <g class="cat-whiskers"><path d="M117 165 L83 159 M117 173 L84 177 M203 165 L237 159 M203 173 L236 177"/></g>
+              <path class="cat-paw" d="M123 230 Q129 246 142 238 M180 238 Q194 245 197 229"/>
+            </svg>
+            <span class="pet-item" id="pet-item" aria-hidden="true">🍓</span>
+          </div>
+          <div class="stage-floor" aria-hidden="true"></div>
+          <div class="wander-overlay" id="wander-overlay" hidden>
+            <div class="wander-message" role="alert">
+              <span class="wander-icon" aria-hidden="true">🐾</span>
+              <strong>Персик убежал!</strong>
+              <p>Поймайте его, пока не закончилось время.</p>
+              <div class="wander-timer" aria-label="Время для спасения"><span id="wander-seconds">3.0</span> сек.</div>
+              <button type="button" class="btn btn-primary" id="catch-button">Поймать питомца</button>
+            </div>
+          </div>
+          <div class="lost-overlay" id="lost-overlay" hidden>
+            <div class="lost-message"><span aria-hidden="true">🌧️</span><h3>Персик ушёл</h3>
+              <p>Один из показателей достиг нуля. Вы можете начать игру заново.</p>
+              <button type="button" class="btn btn-primary" id="new-pet-button">Начать заново</button></div>
+          </div>
+        </div>
+        <p class="pet-hint" id="pet-hint" role="status" aria-live="polite">Выберите действие, чтобы позаботиться о Персике.</p>
+        <div class="statistics" aria-label="Показатели питомца">
+          <div class="stat-row"><div class="stat-heading"><span><span aria-hidden="true">🍓</span> Сытость</span><output id="hunger-value">65</output></div><div class="progress-track"><div id="hunger-progress" class="progress-bar hunger-bar" style="width:65%"></div></div></div>
+          <div class="stat-row"><div class="stat-heading"><span><span aria-hidden="true">✨</span> Счастье</span><output id="happy-value">65</output></div><div class="progress-track"><div id="happy-progress" class="progress-bar happy-bar" style="width:65%"></div></div></div>
+          <div class="stat-row"><div class="stat-heading"><span><span aria-hidden="true">⚡</span> Энергия</span><output id="energy-value">65</output></div><div class="progress-track"><div id="energy-progress" class="progress-bar energy-bar" style="width:65%"></div></div></div>
+        </div>
+      </section>
+
+      <section class="panel actions-panel" aria-labelledby="actions-title">
+        <div class="actions-top"><p class="section-label">Забота и действия</p><h2 id="actions-title">Чем займёмся?</h2><p class="actions-intro">Каждое действие выполняется постепенно. Если питомец занят, следующее попадёт в очередь.</p></div>
+        <div class="action-list" role="group" aria-label="Действия с питомцем">
+          <button class="action-card" id="feed-button" data-action="feed" type="button"><span class="action-emoji" aria-hidden="true">🍓</span><span class="action-description"><strong>Покормить</strong><small>Восстанавливает сытость</small></span><span class="action-plus" aria-hidden="true">+</span></button>
+          <button class="action-card" id="play-button" data-action="play" type="button"><span class="action-emoji" aria-hidden="true">🧶</span><span class="action-description"><strong>Поиграть</strong><small>Повышает счастье, тратит энергию</small></span><span class="action-plus" aria-hidden="true">+</span></button>
+          <button class="action-card" id="sleep-button" data-action="sleep" type="button"><span class="action-emoji" aria-hidden="true">💤</span><span class="action-description"><strong>Уложить спать</strong><small>Помогает восстановить энергию</small></span><span class="action-plus" aria-hidden="true">+</span></button>
+          <button class="action-card" id="train-button" data-action="train" type="button"><span class="action-emoji" aria-hidden="true">🏅</span><span class="action-description"><strong>Дрессировка</strong><small>Кормление, игра и запас энергии</small></span><span class="action-plus" aria-hidden="true">+</span></button>
+        </div>
+        <div class="queue-panel" aria-labelledby="queue-title"><div class="queue-heading"><h3 id="queue-title">Очередь действий</h3><span id="queue-amount">0 из 3</span></div><div id="queue-list" class="queue-items"><p class="queue-empty">Пока очередь пуста</p></div><p class="queue-note">Одновременно выполняется только одно действие. В очередь можно добавить ещё три.</p></div>
+        <div class="activity-log"><div class="log-heading"><h3>Последние события</h3><button type="button" id="clear-log" class="text-button">Очистить</button></div><ul id="event-log" aria-live="polite"><li>Персик готов к игре!</li></ul></div>
+      </section>
+    </div>
+
+    <details class="debug-panel" id="debug-panel">
+      <summary><span>⚙️ Настройки для проверки работы</span><span class="debug-subtitle">Показатели, таймеры и случайные события</span></summary>
+      <div class="debug-content">
+        <p class="debug-intro">Здесь можно ускорить игру и проверить разные ситуации, не дожидаясь обычных таймеров.</p>
+        <form id="debug-form">
+          <fieldset><legend>Время (миллисекунды)</legend><div class="settings-grid">
+            <label>Действие <input name="duration" type="number" min="200" max="20000" step="100" value="2400" required></label>
+            <label>Случайное отклонение ± <input name="jitter" type="number" min="0" max="5000" step="100" value="400" required></label>
+            <label>Шаги действия <input name="steps" type="number" min="2" max="20" step="1" value="8" required></label>
+            <label>Уменьшение показателей каждые <input name="decayEvery" type="number" min="200" max="30000" step="100" value="4500" required></label>
+            <label>Проверка блуждания каждые <input name="wanderEvery" type="number" min="500" max="30000" step="100" value="12000" required></label>
+            <label>Время на спасение <input name="catchTime" type="number" min="500" max="15000" step="100" value="3000" required></label>
+          </div></fieldset>
+          <fieldset><legend>Изменение показателей</legend><div class="settings-grid">
+            <label>Снижение со временем <input name="decayLoss" type="number" min="1" max="30" value="3" required></label>
+            <label>Сытость от еды <input name="feedGain" type="number" min="1" max="100" value="28" required></label>
+            <label>Счастье от игры <input name="playGain" type="number" min="1" max="100" value="25" required></label>
+            <label>Расход энергии на игру <input name="playCost" type="number" min="0" max="60" value="12" required></label>
+            <label>Энергия после сна <input name="sleepGain" type="number" min="1" max="100" value="38" required></label>
+            <label>Дополнительная энергия при дрессировке <input name="trainGain" type="number" min="1" max="100" value="24" required></label>
+            <label>Шанс блуждания, % <input name="wanderChance" type="number" min="0" max="100" value="35" required></label>
+            <label>Потеря счастья при блуждании <input name="wanderPenalty" type="number" min="1" max="100" value="18" required></label>
+          </div></fieldset>
+          <div class="debug-buttons"><button type="submit" class="btn btn-primary">Применить настройки</button><button type="button" id="restore-settings" class="btn btn-secondary">По умолчанию</button><button type="button" id="force-wander" class="btn btn-secondary">Запустить блуждание</button><button type="button" id="reset-button" class="btn btn-danger">Начать заново</button></div>
+          <p class="debug-feedback" id="debug-feedback" role="status" aria-live="polite">Изменения применяются к следующим действиям и срабатываниям таймеров.</p>
+        </form>
+      </div>
+    </details>
+    <footer class="footer">Лабораторная работа №4 · JavaScript Promise · 2026</footer>
+  </main>
+</body>
+</html>
