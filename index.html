@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Лабораторная работа №6 по основам веб-разработки на стороне клиента: классы, сигналы и Server-Sent Events.">
+  <title>Лабораторная №6 — Classes, Signals, SSE</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="js/app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти к заданиям</a>
+  <header class="site-header">
+    <div class="container topbar">
+      <a class="logo" href="#main" aria-label="Перейти к началу лабораторной">
+        <span class="logo-mark" aria-hidden="true">JS</span>
+        <span>Практика JavaScript</span>
+      </a>
+      <span class="topbar-tag">Лабораторная работа / 06</span>
+    </div>
+  </header>
+
+  <main class="container" id="main">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-text">
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span> Основы веб-разработки на стороне клиента</p>
+        <h1 id="page-title">Кашафутдинова Алина Тимуровна — Лабораторная работа №6</h1>
+        <p class="hero-subtitle">Classes, Signals, SSE</p>
+        <p class="hero-desc">Четыре задания по JavaScript: версии программы, геометрические фигуры, конвертация температуры и прямая трансляция игры «Камень, ножницы, бумага».</p>
+        <div class="hero-meta"><span>Группа 257-321</span><span class="meta-separator" aria-hidden="true"></span><span>2026 год</span></div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="code-card"><span class="code-line pink"></span><span class="code-line wide"></span><span class="code-line short"></span><span class="code-line medium"></span><span class="code-line pink small"></span></div>
+        <div class="hero-symbol symbol-top">{ }</div>
+        <div class="hero-symbol symbol-bottom">✳</div>
+      </div>
+    </section>
+
+    <div class="task-grid">
+      <section class="task-panel" id="versions" aria-labelledby="versions-title">
+        <div class="task-heading"><span class="number-badge">01</span><div><p class="task-category">Функция-конструктор и прототип</p><h2 id="versions-title">Версионирование</h2></div></div>
+        <p class="task-description">Создайте версию программы и попробуйте изменить её номер. История изменений позволяет откатиться назад.</p>
+        <form id="version-form" class="input-row" novalidate>
+          <div class="field grow"><label for="version-input">Начальная версия</label><input id="version-input" name="version" type="text" placeholder="Например, 1.2.4" spellcheck="false" autocomplete="off" aria-describedby="version-hint version-error"><small id="version-hint">Если оставить поле пустым, будет 0.0.1.</small></div>
+          <button class="button button-primary align-field" type="submit">Создать версию</button>
+        </form>
+        <p class="message error" id="version-error" role="alert" hidden></p>
+        <div id="version-output" class="result-card" hidden>
+          <div class="result-top"><span class="result-label">Текущая версия</span><strong id="version-value" class="version-number" aria-live="polite">0.0.1</strong></div>
+          <div class="button-group">
+            <button class="button button-soft" type="button" id="version-major">major +1</button>
+            <button class="button button-soft" type="button" id="version-minor">minor +1</button>
+            <button class="button button-soft" type="button" id="version-patch">patch +1</button>
+            <button class="button button-outline" type="button" id="version-rollback">Откатить</button>
+          </div>
+          <p class="small-note">Major сбрасывает minor и patch, minor сбрасывает patch.</p>
+        </div>
+      </section>
+
+      <section class="task-panel" id="geometry" aria-labelledby="geometry-title">
+        <div class="task-heading"><span class="number-badge">02</span><div><p class="task-category">Классы и наследование</p><h2 id="geometry-title">Прямоугольник и квадрат</h2></div></div>
+        <p class="task-description">Введите размеры фигуры. Если стороны равны, будет использован класс Square. В остальных случаях — Rectangle.</p>
+        <div class="two-fields">
+          <div class="field"><label for="shape-width">Ширина</label><input id="shape-width" type="number" min="0.01" step="any" inputmode="decimal" value="6" required></div>
+          <div class="field"><label for="shape-height">Высота</label><input id="shape-height" type="number" min="0.01" step="any" inputmode="decimal" value="4" required></div>
+        </div>
+        <div class="button-group margin-top">
+          <button class="button button-primary" type="button" id="shape-area">Рассчитать площадь</button>
+          <button class="button button-outline" type="button" id="shape-perimeter">Рассчитать периметр</button>
+        </div>
+        <div class="result-card geometry-result" id="shape-result" role="status" aria-live="polite">
+          <div class="shape-visual"><div class="shape-sketch" aria-hidden="true"></div></div>
+          <div><span class="result-label" id="shape-kind">Прямоугольник</span><strong class="metric-value" id="shape-value">—</strong><span class="metric-note" id="shape-measure">Выберите действие выше</span></div>
+        </div>
+      </section>
+
+      <section class="task-panel temperature-panel" id="temperature" aria-labelledby="temperature-title">
+        <div class="task-heading"><span class="number-badge">03</span><div><p class="task-category">Геттер, сеттер, статические методы</p><h2 id="temperature-title">Температура</h2></div></div>
+        <p class="task-description">Введите две температуры в градусах Цельсия. Выберите единицу измерения, чтобы увидеть перевод, или сложите и вычтите значения.</p>
+        <fieldset class="units-fieldset">
+          <legend>Показывать температуру в</legend>
+          <div class="unit-options">
+            <label class="unit-option"><input type="radio" name="temperature-unit" value="C" checked><span>Цельсия (°C)</span></label>
+            <label class="unit-option"><input type="radio" name="temperature-unit" value="K"><span>Кельвинах (K)</span></label>
+            <label class="unit-option"><input type="radio" name="temperature-unit" value="F"><span>Фаренгейтах (°F)</span></label>
+          </div>
+        </fieldset>
+        <div class="two-fields">
+          <div class="field"><label for="temperature-first">Температура №1, °C</label><input id="temperature-first" type="number" step="any" inputmode="decimal" value="20" aria-describedby="temperature-first-error temperature-first-display"><small class="converted" id="temperature-first-display">20,00 °C</small><small class="field-error" id="temperature-first-error" role="alert" hidden></small></div>
+          <div class="field"><label for="temperature-second">Температура №2, °C</label><input id="temperature-second" type="number" step="any" inputmode="decimal" value="10" aria-describedby="temperature-second-error temperature-second-display"><small class="converted" id="temperature-second-display">10,00 °C</small><small class="field-error" id="temperature-second-error" role="alert" hidden></small></div>
+        </div>
+        <div class="button-group margin-top">
+          <button class="button button-primary" type="button" id="temperature-add">Сложить</button>
+          <button class="button button-outline" type="button" id="temperature-subtract">Вычесть</button>
+        </div>
+        <div class="result-card temperature-result" id="temperature-result" role="status" aria-live="polite">
+          <span class="result-label">Результат вычисления</span>
+          <strong class="metric-value" id="temperature-value">—</strong>
+          <span class="metric-note" id="temperature-note">Выберите действие выше</span>
+        </div>
+      </section>
+
+      <section class="task-panel game-panel" id="stream" aria-labelledby="stream-title">
+        <div class="task-heading"><span class="number-badge">04</span><div><p class="task-category">EventSource + сигналы и эффекты</p><h2 id="stream-title">Камень, ножницы, бумага</h2></div></div>
+        <p class="task-description">Следите за раундами двух игроков в реальном времени. Счёт, статистика и история обновляются по мере поступления событий с сервера.</p>
+        <div class="stream-controls">
+          <div class="field source-field"><label for="stream-source">Источник трансляции</label><select id="stream-source"><option value="teacher">Сервер преподавателя</option><option value="demo">Локальная демонстрация</option></select></div>
+          <button class="button button-primary align-field" type="button" id="stream-start">Следить за играми</button>
+          <button class="button button-outline align-field" type="button" id="stream-stop" disabled>Остановить</button>
+        </div>
+        <p class="small-note">Локальная демонстрация работает при запуске через <code>python3 server.py</code>. Если внешний сервер не отвечает, выберите её для проверки.</p>
+        <div class="connection-row" role="status" aria-live="polite"><span id="connection-dot" class="connection-dot" aria-hidden="true"></span><span id="connection-status">Трансляция не запущена</span><span class="round-total">Раундов: <strong id="round-count">0</strong></span></div>
+        <div class="scoreboard" aria-label="Результаты игроков">
+          <div class="player-score"><div class="score-label"><span class="player-icon" aria-hidden="true">1</span> Игрок 1</div><strong class="score-number" id="player1-wins">0</strong><span class="score-caption">побед</span></div>
+          <div class="score-center"><span class="versus">VS</span><span class="draw-count">Ничьих: <strong id="draw-count">0</strong></span></div>
+          <div class="player-score"><div class="score-label"><span class="player-icon" aria-hidden="true">2</span> Игрок 2</div><strong class="score-number" id="player2-wins">0</strong><span class="score-caption">побед</span></div>
+        </div>
+        <div class="game-info">
+          <div class="info-card"><h3>Последний раунд</h3><p id="last-round" aria-live="polite">Пока нет сыгранных раундов.</p></div>
+          <div class="info-card"><h3>Статистика выбора</h3><div class="stats-grid"><div class="stats-header">Вариант</div><div class="stats-header">Игрок 1</div><div class="stats-header">Игрок 2</div><div>Камень</div><strong id="p1-rock">0</strong><strong id="p2-rock">0</strong><div>Ножницы</div><strong id="p1-scissors">0</strong><strong id="p2-scissors">0</strong><div>Бумага</div><strong id="p1-paper">0</strong><strong id="p2-paper">0</strong></div></div>
+        </div>
+        <div class="history-heading"><h3>История раундов</h3><span class="history-label">С момента открытия страницы</span></div>
+        <ol id="round-history" class="round-history" aria-label="История результатов"></ol>
+        <p id="history-empty" class="history-empty">Начните трансляцию — здесь будут появляться новые раунды.</p>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer"><div class="container footer-inner"><span>Кашафутдинова Алина Тимуровна · 257-321</span><span>Учебный проект · 2026</span></div></footer>
+</body>
+</html>
